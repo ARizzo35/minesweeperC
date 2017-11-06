@@ -5,7 +5,7 @@
  *
  * File Description
  *
- * Last Modified: Sun Nov  5 18:32:27 PST 2017</pre>
+ * Last Modified: Sun Nov  5 20:08:13 PST 2017</pre>
  * @author Adam Rizkalla
  */
 
@@ -39,9 +39,19 @@ void initBoard(char *board, int size, int numMines)
 
 void printBoard(char *board, int size)
 {
+  printf("     ");
+  for (int i = 0; i < size; i++) {
+    printf("%2d ", i+1);
+  }
+  printf("\n-----");
+  for (int i = 0; i < size; i++) {
+    printf("---");
+  }
+  printf("\n");
   for(int i = 0; i < size; i++) {
+    printf("%2d | ", i+1);
     for(int j = 0; j < size; j++) {
-      printf("%c ", board[i*size + j]);
+      printf("%2c ", board[i*size + j]);
     }
     printf("\n");
   }
@@ -49,12 +59,22 @@ void printBoard(char *board, int size)
 
 void printBoardHidden(char *board, int size)
 {
+  printf("     ");
+  for (int i = 0; i < size; i++) {
+    printf("%2d ", i+1);
+  }
+  printf("\n-----");
+  for (int i = 0; i < size; i++) {
+    printf("---");
+  }
+  printf("\n");
   for(int i = 0; i < size; i++) {
+    printf("%2d | ", i+1);
     for(int j = 0; j < size; j++) {
       if (board[i*size + j] == MINE)
-        printf("%c ", UNPLAYED);
+        printf("%2c ", UNPLAYED);
       else
-        printf("%c ", board[i*size + j]);
+        printf("%2c ", board[i*size + j]);
     }
     printf("\n");
   }
@@ -136,13 +156,13 @@ main(int argc, char *argv[])
   int playRow, playCol, rowSize = ROWSIZE;
 
   if (argc != 2) {
-    printf("Please enter a valid row size between 10-100\n");
+    printf("Please enter a valid row size between 10-99\n");
     printf("Ex: ./minesweeper 10\n");
     return EXIT_FAILURE;
   }
   rowSize = strtol(argv[1], NULL, 10);
-  if (rowSize < 10 || rowSize > 100) {
-    printf("Please enter a valid row size between 10-100\n");
+  if (rowSize < 10 || rowSize > 99) {
+    printf("Please enter a valid row size between 10-99\n");
     printf("Ex: ./minesweeper 10\n");
     return EXIT_FAILURE;
   }
