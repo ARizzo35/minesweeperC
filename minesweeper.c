@@ -5,7 +5,7 @@
  *
  * File Description
  *
- * Last Modified: Sun Nov  5 20:08:13 PST 2017</pre>
+ * Last Modified: Sun Nov  5 21:25:42 PST 2017</pre>
  * @author Adam Rizkalla
  */
 
@@ -37,7 +37,7 @@ void initBoard(char *board, int size, int numMines)
   }
 }
 
-void printBoard(char *board, int size)
+void printBoard(char *board, int size, int hidden)
 {
   printf("     ");
   for (int i = 0; i < size; i++) {
@@ -51,27 +51,7 @@ void printBoard(char *board, int size)
   for(int i = 0; i < size; i++) {
     printf("%2d | ", i+1);
     for(int j = 0; j < size; j++) {
-      printf("%2c ", board[i*size + j]);
-    }
-    printf("\n");
-  }
-}
-
-void printBoardHidden(char *board, int size)
-{
-  printf("     ");
-  for (int i = 0; i < size; i++) {
-    printf("%2d ", i+1);
-  }
-  printf("\n-----");
-  for (int i = 0; i < size; i++) {
-    printf("---");
-  }
-  printf("\n");
-  for(int i = 0; i < size; i++) {
-    printf("%2d | ", i+1);
-    for(int j = 0; j < size; j++) {
-      if (board[i*size + j] == MINE)
+      if (hidden && board[i*size + j] == MINE)
         printf("%2c ", UNPLAYED);
       else
         printf("%2c ", board[i*size + j]);
@@ -176,7 +156,7 @@ main(int argc, char *argv[])
 
   while(1)
   {
-    printBoardHidden(board, rowSize);
+    printBoard(board, rowSize, 1);
 
     // Ask user to pick row and column to play
     printf("\nPick a row (1-%d) and column (1-%d) to play!\nEnter 0 to exit: ", rowSize, rowSize);
@@ -193,13 +173,13 @@ main(int argc, char *argv[])
     printf("Playing (%d, %d)...\n\n", playRow, playCol);
     if (playMove(board, rowSize, playRow-1, playCol-1)) {
       // Hit a mine
-      printBoard(board, rowSize);
+      printBoard(board, rowSize, 0);
       printf("\nBOOM! You hit a mine!\n");
       break;
     }
     if (checkWinner(board, rowSize)) {
       // Board fully explored
-      printBoard(board, rowSize);
+      printBoard(board, rowSize, 0);
       printf("\nYou Win!\n");
       break;
     }
