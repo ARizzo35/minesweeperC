@@ -6,7 +6,7 @@
  * Minesweeper game implemented in C.
  * Board is always square, max board size is 99x99.
  *
- * Last Modified: Wed Nov  8 19:46:12 PST 2017</pre>
+ * Last Modified: Sun Nov 12 13:05:47 PST 2017</pre>
  * @author Adam Rizkalla
  */
 
@@ -19,6 +19,19 @@
 #define UNPLAYED  '.' // Character displayed for unplayed square
 #define MINE      '*' // Character displayed for mine
 
+
+char *ansi_colors[] = {
+/*ANSI_COLOR_RESET*/   "\x1b[0m",
+/*ANSI_COLOR_WHITE*/   "\x1b[1;37m",
+/*ANSI_COLOR_GREEN*/   "\x1b[0;32m",
+/*ANSI_COLOR_YELLOW*/  "\x1b[0;33m",
+/*ANSI_COLOR_RED*/     "\x1b[0;31m",
+/*ANSI_COLOR_MAGENTA*/ "\x1b[0;35m",
+/*ANSI_COLOR_CYAN*/    "\x1b[0;36m",
+/*ANSI_COLOR_BLUE*/    "\x1b[0;34m",
+/*ANSI_COLOR_DARKGRAY*/"\x1b[1;30m",
+/*ANSI_COLOR_YELLOW*/  "\x1b[1;33m",
+};
 
 // Initializes the board and places mines in random squares
 void initBoard(char *board, int size, int numMines)
@@ -59,6 +72,8 @@ void printBoard(char *board, int size, int hidden)
     for(int j = 0; j < size; j++) {
       if (hidden && board[i*size + j] == MINE)
         printf("%2c ", UNPLAYED);
+      else if (board[i*size + j] >= '0')
+        printf("%s%2c%s ", ansi_colors[board[i*size + j] - '0' + 1], board[i*size + j], ansi_colors[0]);
       else
         printf("%2c ", board[i*size + j]);
     }
