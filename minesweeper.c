@@ -6,7 +6,7 @@
  * Minesweeper game implemented in C.
  * Board is always square, max board size is 99x99.
  *
- * Last Modified: Sun Nov 12 13:05:47 PST 2017</pre>
+ * Last Modified: Mon Feb 26 19:40:42 PST 2018</pre>
  * @author Adam Rizkalla
  */
 
@@ -72,7 +72,7 @@ void printBoard(char *board, int size, int hidden)
     for(int j = 0; j < size; j++) {
       if (hidden && board[i*size + j] == MINE)
         printf("%2c ", UNPLAYED);
-      else if (board[i*size + j] >= '0')
+      else if (board[i*size + j] >= '0' && board[i*size + j] <= '9')
         printf("%s%2c%s ", ansi_colors[board[i*size + j] - '0' + 1], board[i*size + j], ansi_colors[0]);
       else
         printf("%2c ", board[i*size + j]);
